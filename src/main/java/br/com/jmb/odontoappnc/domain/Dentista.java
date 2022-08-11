@@ -75,7 +75,7 @@ public class Dentista implements Serializable {
 
     @OneToMany(mappedBy = "dentista")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "procedimento", "dentista", "paciente" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "procedimentos", "dentista", "paciente" }, allowSetters = true)
     private Set<Atendimento> atendimentos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

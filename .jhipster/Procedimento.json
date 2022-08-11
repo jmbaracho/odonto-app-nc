@@ -21,6 +21,15 @@
   "name": "Procedimento",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "atendimento",
+      "otherEntityRelationshipName": "procedimento",
+      "ownerSide": false,
+      "relationshipName": "atendimento",
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": "required"
+    }
+  ],
   "service": "serviceImpl"
 }

@@ -8,9 +8,15 @@
     -->
     <changeSet id="20220811003642-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="atendimento_id"
+                                 baseTableName="rel_atendimento__procedimento"
+                                 constraintName="fk_rel_atendimento__procedimento__atendimento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="atendimento"/>
+
         <addForeignKeyConstraint baseColumnNames="procedimento_id"
-                                 baseTableName="atendimento"
-                                 constraintName="fk_atendimento__procedimento_id"
+                                 baseTableName="rel_atendimento__procedimento"
+                                 constraintName="fk_rel_atendimento__procedimento__procedimento_id"
                                  referencedColumnNames="id"
                                  referencedTableName="procedimento"/>
 

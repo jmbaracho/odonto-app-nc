@@ -94,7 +94,7 @@ export class AtendimentoUpdateComponent implements OnInit {
 
     this.procedimentosSharedCollection = this.procedimentoService.addProcedimentoToCollectionIfMissing<IProcedimento>(
       this.procedimentosSharedCollection,
-      atendimento.procedimento
+      ...(atendimento.procedimentos ?? [])
     );
     this.dentistasSharedCollection = this.dentistaService.addDentistaToCollectionIfMissing<IDentista>(
       this.dentistasSharedCollection,
@@ -112,7 +112,10 @@ export class AtendimentoUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IProcedimento[]>) => res.body ?? []))
       .pipe(
         map((procedimentos: IProcedimento[]) =>
-          this.procedimentoService.addProcedimentoToCollectionIfMissing<IProcedimento>(procedimentos, this.atendimento?.procedimento)
+          this.procedimentoService.addProcedimentoToCollectionIfMissing<IProcedimento>(
+            procedimentos,
+            ...(this.atendimento?.procedimentos ?? [])
+          )
         )
       )
       .subscribe((procedimentos: IProcedimento[]) => (this.procedimentosSharedCollection = procedimentos));

@@ -17,9 +17,6 @@
             <column name="data_atendimento" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="procedimento_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="dentista_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -28,6 +25,20 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20220811003642-1-relations" author="jhipster">
+
+        <createTable tableName="rel_atendimento__procedimento">
+            <column name="procedimento_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atendimento_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="atendimento_id, procedimento_id" tableName="rel_atendimento__procedimento"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

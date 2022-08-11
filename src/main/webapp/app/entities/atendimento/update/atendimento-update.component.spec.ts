@@ -59,12 +59,12 @@ describe('Atendimento Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Procedimento query and add missing value', () => {
       const atendimento: IAtendimento = { id: 456 };
-      const procedimento: IProcedimento = { id: 43526 };
-      atendimento.procedimento = procedimento;
+      const procedimentos: IProcedimento[] = [{ id: 43526 }];
+      atendimento.procedimentos = procedimentos;
 
       const procedimentoCollection: IProcedimento[] = [{ id: 15564 }];
       jest.spyOn(procedimentoService, 'query').mockReturnValue(of(new HttpResponse({ body: procedimentoCollection })));
-      const additionalProcedimentos = [procedimento];
+      const additionalProcedimentos = [...procedimentos];
       const expectedCollection: IProcedimento[] = [...additionalProcedimentos, ...procedimentoCollection];
       jest.spyOn(procedimentoService, 'addProcedimentoToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -126,7 +126,7 @@ describe('Atendimento Management Update Component', () => {
     it('Should update editForm', () => {
       const atendimento: IAtendimento = { id: 456 };
       const procedimento: IProcedimento = { id: 73672 };
-      atendimento.procedimento = procedimento;
+      atendimento.procedimentos = [procedimento];
       const dentista: IDentista = { id: 84278 };
       atendimento.dentista = dentista;
       const paciente: IPaciente = { id: 61656 };

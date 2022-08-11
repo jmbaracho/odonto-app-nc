@@ -3,6 +3,8 @@ package br.com.jmb.odontoappnc.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -28,8 +30,16 @@ public class Atendimento implements Serializable {
     @Column(name = "data_atendimento", nullable = false)
     private LocalDate dataAtendimento;
 
-    @ManyToOne
-    private Procedimento procedimento;
+    @ManyToMany
+    @NotNull
+    @JoinTable(
+        name = "rel_atendimento__procedimento",
+        joinColumns = @JoinColumn(name = "atendimento_id"),
+        inverseJoinColumns = @JoinColumn(name = "procedimento_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "atendimentos" }, allowSetters = true)
+    private Set<Procedimento> procedimentos = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "atendimentos" }, allowSetters = true)
@@ -67,16 +77,28 @@ public class Atendimento implements Serializable {
         this.dataAtendimento = dataAtendimento;
     }
 
-    public Procedimento getProcedimento() {
-        return this.procedimento;
+    public Set<Procedimento> getProcedimentos() {
+        return this.procedimentos;
     }
 
-    public void setProcedimento(Procedimento procedimento) {
-        this.procedimento = procedimento;
+    public void setProcedimentos(Set<Procedimento> procedimentos) {
+        this.procedimentos = procedimentos;
     }
 
-    public Atendimento procedimento(Procedimento procedimento) {
-        this.setProcedimento(procedimento);
+    public Atendimento procedimentos(Set<Procedimento> procedimentos) {
+        this.setProcedimentos(procedimentos);
+        return this;
+    }
+
+    public Atendimento addProcedimento(Procedimento procedimento) {
+        this.procedimentos.add(procedimento);
+        procedimento.getAtendimentos().add(this);
+        return this;
+    }
+
+    public Atendimento removeProcedimento(Procedimento procedimento) {
+        this.procedimentos.remove(procedimento);
+        procedimento.getAtendimentos().remove(this);
         return this;
     }
 

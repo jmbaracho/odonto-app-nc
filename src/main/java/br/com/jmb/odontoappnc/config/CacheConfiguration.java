@@ -54,6 +54,8 @@ public class CacheConfiguration {
             createCache(cm, br.com.jmb.odontoappnc.domain.Paciente.class.getName() + ".atendimentos");
             createCache(cm, br.com.jmb.odontoappnc.domain.Procedimento.class.getName());
             createCache(cm, br.com.jmb.odontoappnc.domain.Atendimento.class.getName());
+            createCache(cm, br.com.jmb.odontoappnc.domain.Procedimento.class.getName() + ".atendimentos");
+            createCache(cm, br.com.jmb.odontoappnc.domain.Atendimento.class.getName() + ".procedimentos");
             // jhipster-needle-ehcache-add-entry
         };
     }

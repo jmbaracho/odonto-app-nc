@@ -14,12 +14,13 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ProcedimentoFormGroupInput = IProcedimento | PartialWithRequiredKeyOf<NewProcedimento>;
 
-type ProcedimentoFormDefaults = Pick<NewProcedimento, 'id'>;
+type ProcedimentoFormDefaults = Pick<NewProcedimento, 'id' | 'atendimentos'>;
 
 type ProcedimentoFormGroupContent = {
   id: FormControl<IProcedimento['id'] | NewProcedimento['id']>;
   descricao: FormControl<IProcedimento['descricao']>;
   valor: FormControl<IProcedimento['valor']>;
+  atendimentos: FormControl<IProcedimento['atendimentos']>;
 };
 
 export type ProcedimentoFormGroup = FormGroup<ProcedimentoFormGroupContent>;
@@ -45,6 +46,7 @@ export class ProcedimentoFormService {
       valor: new FormControl(procedimentoRawValue.valor, {
         validators: [Validators.required],
       }),
+      atendimentos: new FormControl(procedimentoRawValue.atendimentos ?? []),
     });
   }
 
@@ -65,6 +67,7 @@ export class ProcedimentoFormService {
   private getFormDefaults(): ProcedimentoFormDefaults {
     return {
       id: null,
+      atendimentos: [],
     };
   }
 }

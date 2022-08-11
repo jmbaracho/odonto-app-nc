@@ -14,12 +14,12 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type AtendimentoFormGroupInput = IAtendimento | PartialWithRequiredKeyOf<NewAtendimento>;
 
-type AtendimentoFormDefaults = Pick<NewAtendimento, 'id'>;
+type AtendimentoFormDefaults = Pick<NewAtendimento, 'id' | 'procedimentos'>;
 
 type AtendimentoFormGroupContent = {
   id: FormControl<IAtendimento['id'] | NewAtendimento['id']>;
   dataAtendimento: FormControl<IAtendimento['dataAtendimento']>;
-  procedimento: FormControl<IAtendimento['procedimento']>;
+  procedimentos: FormControl<IAtendimento['procedimentos']>;
   dentista: FormControl<IAtendimento['dentista']>;
   paciente: FormControl<IAtendimento['paciente']>;
 };
@@ -44,7 +44,7 @@ export class AtendimentoFormService {
       dataAtendimento: new FormControl(atendimentoRawValue.dataAtendimento, {
         validators: [Validators.required],
       }),
-      procedimento: new FormControl(atendimentoRawValue.procedimento),
+      procedimentos: new FormControl(atendimentoRawValue.procedimentos ?? []),
       dentista: new FormControl(atendimentoRawValue.dentista),
       paciente: new FormControl(atendimentoRawValue.paciente),
     });
@@ -67,6 +67,7 @@ export class AtendimentoFormService {
   private getFormDefaults(): AtendimentoFormDefaults {
     return {
       id: null,
+      procedimentos: [],
     };
   }
 }

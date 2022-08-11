@@ -22,6 +22,7 @@ describe('Procedimento Form Service', () => {
             id: expect.any(Object),
             descricao: expect.any(Object),
             valor: expect.any(Object),
+            atendimentos: expect.any(Object),
           })
         );
       });
@@ -34,6 +35,7 @@ describe('Procedimento Form Service', () => {
             id: expect.any(Object),
             descricao: expect.any(Object),
             valor: expect.any(Object),
+            atendimentos: expect.any(Object),
           })
         );
       });

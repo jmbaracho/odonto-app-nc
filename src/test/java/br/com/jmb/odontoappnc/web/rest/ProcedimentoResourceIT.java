@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import br.com.jmb.odontoappnc.IntegrationTest;
+import br.com.jmb.odontoappnc.domain.Atendimento;
 import br.com.jmb.odontoappnc.domain.Procedimento;
 import br.com.jmb.odontoappnc.repository.ProcedimentoRepository;
 import br.com.jmb.odontoappnc.service.dto.ProcedimentoDTO;
@@ -67,6 +68,16 @@ class ProcedimentoResourceIT {
      */
     public static Procedimento createEntity(EntityManager em) {
         Procedimento procedimento = new Procedimento().descricao(DEFAULT_DESCRICAO).valor(DEFAULT_VALOR);
+        // Add required entity
+        Atendimento atendimento;
+        if (TestUtil.findAll(em, Atendimento.class).isEmpty()) {
+            atendimento = AtendimentoResourceIT.createEntity(em);
+            em.persist(atendimento);
+            em.flush();
+        } else {
+            atendimento = TestUtil.findAll(em, Atendimento.class).get(0);
+        }
+        procedimento.getAtendimentos().add(atendimento);
         return procedimento;
     }
 
@@ -78,6 +89,16 @@ class ProcedimentoResourceIT {
      */
     public static Procedimento createUpdatedEntity(EntityManager em) {
         Procedimento procedimento = new Procedimento().descricao(UPDATED_DESCRICAO).valor(UPDATED_VALOR);
+        // Add required entity
+        Atendimento atendimento;
+        if (TestUtil.findAll(em, Atendimento.class).isEmpty()) {
+            atendimento = AtendimentoResourceIT.createUpdatedEntity(em);
+            em.persist(atendimento);
+            em.flush();
+        } else {
+            atendimento = TestUtil.findAll(em, Atendimento.class).get(0);
+        }
+        procedimento.getAtendimentos().add(atendimento);
         return procedimento;
     }
 
