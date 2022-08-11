@@ -1,0 +1,96 @@
+<div>
+  <h2 id="page-heading" data-cy="AtendimentoHeading">
+    <span>Atendimentos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-atendimento"
+        [routerLink]="['/atendimento/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Atendimento </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="atendimentos?.length === 0">
+    <span>No Atendimentos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="atendimentos && atendimentos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dataAtendimento"><span>Data Atendimento</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="procedimento.descricao"><span>Procedimento</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dentista.nomeDentista"><span>Dentista</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="paciente.nomePaciente"><span>Paciente</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let atendimento of atendimentos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/atendimento', atendimento.id, 'view']">{{ atendimento.id }}</a>
+          </td>
+          <td>{{ atendimento.dataAtendimento | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="atendimento.procedimento">
+              <a [routerLink]="['/procedimento', atendimento.procedimento.id, 'view']">{{ atendimento.procedimento?.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="atendimento.dentista">
+              <a [routerLink]="['/dentista', atendimento.dentista.id, 'view']">{{ atendimento.dentista?.nomeDentista }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="atendimento.paciente">
+              <a [routerLink]="['/paciente', atendimento.paciente.id, 'view']">{{ atendimento.paciente?.nomePaciente }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/atendimento', atendimento.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/atendimento', atendimento.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(atendimento)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
