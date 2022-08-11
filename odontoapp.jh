@@ -1,0 +1,53 @@
+entity Dentista {
+	nomeDentista String required
+    cpf String required
+    cro String required
+    dataNascimento LocalDate required
+    logradouro String required
+    numero String required
+    bairro String required
+    cidade String required
+    uf String required
+    complemento String
+    email String required
+    telefone String required
+}
+
+entity Paciente {
+	nomePaciente String required
+    cpf String required
+    dataNascimento LocalDate required
+    logradouro String required
+    numero String required
+    bairro String required
+    cidade String required
+    uf String required
+    complemento String
+    email String required
+    telefone String required
+}
+
+entity Procedimento {
+	descricao String required
+    valor BigDecimal required
+}
+
+entity Atendimento {
+	dataAtendimento LocalDate required
+}
+
+relationship OneToMany {
+  	Dentista to Atendimento{dentista(nomeDentista)}
+  	Paciente to Atendimento{paciente(nomePaciente)}
+}
+
+relationship ManyToOne {
+	Atendimento{procedimento(descricao)} to Procedimento
+}
+
+paginate Dentista, Paciente, Procedimento with pagination
+dto * with mapstruct
+service all with serviceImpl
+
+
+    
