@@ -1,7 +1,10 @@
 package br.com.jmb.odontoappnc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -30,6 +33,11 @@ public class Procedimento implements Serializable {
     @NotNull
     @Column(name = "valor", precision = 21, scale = 2, nullable = false)
     private BigDecimal valor;
+
+    @ManyToMany(mappedBy = "procedimentos")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "procedimentos", "dentista", "paciente" }, allowSetters = true)
+    private Set<Atendimento> atendimentos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -70,6 +78,37 @@ public class Procedimento implements Serializable {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public Set<Atendimento> getAtendimentos() {
+        return this.atendimentos;
+    }
+
+    public void setAtendimentos(Set<Atendimento> atendimentos) {
+        if (this.atendimentos != null) {
+            this.atendimentos.forEach(i -> i.removeProcedimento(this));
+        }
+        if (atendimentos != null) {
+            atendimentos.forEach(i -> i.addProcedimento(this));
+        }
+        this.atendimentos = atendimentos;
+    }
+
+    public Procedimento atendimentos(Set<Atendimento> atendimentos) {
+        this.setAtendimentos(atendimentos);
+        return this;
+    }
+
+    public Procedimento addAtendimento(Atendimento atendimento) {
+        this.atendimentos.add(atendimento);
+        atendimento.getProcedimentos().add(this);
+        return this;
+    }
+
+    public Procedimento removeAtendimento(Atendimento atendimento) {
+        this.atendimentos.remove(atendimento);
+        atendimento.getProcedimentos().remove(this);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

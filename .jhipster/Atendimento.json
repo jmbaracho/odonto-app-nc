@@ -20,8 +20,11 @@
     {
       "otherEntityField": "descricao",
       "otherEntityName": "procedimento",
+      "otherEntityRelationshipName": "atendimento",
+      "ownerSide": true,
       "relationshipName": "procedimento",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": "required"
     },
     {
       "otherEntityField": "nomeDentista",

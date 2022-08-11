@@ -2,7 +2,9 @@ package br.com.jmb.odontoappnc.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -15,7 +17,7 @@ public class AtendimentoDTO implements Serializable {
     @NotNull
     private LocalDate dataAtendimento;
 
-    private ProcedimentoDTO procedimento;
+    private Set<ProcedimentoDTO> procedimentos = new HashSet<>();
 
     private DentistaDTO dentista;
 
@@ -37,12 +39,12 @@ public class AtendimentoDTO implements Serializable {
         this.dataAtendimento = dataAtendimento;
     }
 
-    public ProcedimentoDTO getProcedimento() {
-        return procedimento;
+    public Set<ProcedimentoDTO> getProcedimentos() {
+        return procedimentos;
     }
 
-    public void setProcedimento(ProcedimentoDTO procedimento) {
-        this.procedimento = procedimento;
+    public void setProcedimentos(Set<ProcedimentoDTO> procedimentos) {
+        this.procedimentos = procedimentos;
     }
 
     public DentistaDTO getDentista() {
@@ -88,7 +90,7 @@ public class AtendimentoDTO implements Serializable {
         return "AtendimentoDTO{" +
             "id=" + getId() +
             ", dataAtendimento='" + getDataAtendimento() + "'" +
-            ", procedimento=" + getProcedimento() +
+            ", procedimentos=" + getProcedimentos() +
             ", dentista=" + getDentista() +
             ", paciente=" + getPaciente() +
             "}";

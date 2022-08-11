@@ -8,6 +8,8 @@ import br.com.jmb.odontoappnc.service.dto.AtendimentoDTO;
 import br.com.jmb.odontoappnc.service.dto.DentistaDTO;
 import br.com.jmb.odontoappnc.service.dto.PacienteDTO;
 import br.com.jmb.odontoappnc.service.dto.ProcedimentoDTO;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.mapstruct.*;
 
 /**
@@ -15,16 +17,24 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface AtendimentoMapper extends EntityMapper<AtendimentoDTO, Atendimento> {
-    @Mapping(target = "procedimento", source = "procedimento", qualifiedByName = "procedimentoDescricao")
+    @Mapping(target = "procedimentos", source = "procedimentos", qualifiedByName = "procedimentoDescricaoSet")
     @Mapping(target = "dentista", source = "dentista", qualifiedByName = "dentistaNomeDentista")
     @Mapping(target = "paciente", source = "paciente", qualifiedByName = "pacienteNomePaciente")
     AtendimentoDTO toDto(Atendimento s);
+
+    @Mapping(target = "removeProcedimento", ignore = true)
+    Atendimento toEntity(AtendimentoDTO atendimentoDTO);
 
     @Named("procedimentoDescricao")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "descricao", source = "descricao")
     ProcedimentoDTO toDtoProcedimentoDescricao(Procedimento procedimento);
+
+    @Named("procedimentoDescricaoSet")
+    default Set<ProcedimentoDTO> toDtoProcedimentoDescricaoSet(Set<Procedimento> procedimento) {
+        return procedimento.stream().map(this::toDtoProcedimentoDescricao).collect(Collectors.toSet());
+    }
 
     @Named("dentistaNomeDentista")
     @BeanMapping(ignoreByDefault = true)

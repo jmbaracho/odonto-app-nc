@@ -47,9 +47,10 @@
           </td>
           <td>{{ atendimento.dataAtendimento | formatMediumDate }}</td>
           <td>
-            <div *ngIf="atendimento.procedimento">
-              <a [routerLink]="['/procedimento', atendimento.procedimento.id, 'view']">{{ atendimento.procedimento?.descricao }}</a>
-            </div>
+            <span *ngFor="let procedimento of atendimento.procedimentos; let last = last">
+              <a class="form-control-static" [routerLink]="['/procedimento', procedimento.id, 'view']">{{ procedimento.descricao }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
           </td>
           <td>
             <div *ngIf="atendimento.dentista">

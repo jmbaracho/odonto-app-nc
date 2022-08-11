@@ -6,7 +6,7 @@ import { IPaciente } from 'app/entities/paciente/paciente.model';
 export interface IAtendimento {
   id: number;
   dataAtendimento?: dayjs.Dayjs | null;
-  procedimento?: Pick<IProcedimento, 'id' | 'descricao'> | null;
+  procedimentos?: Pick<IProcedimento, 'id' | 'descricao'>[] | null;
   dentista?: Pick<IDentista, 'id' | 'nomeDentista'> | null;
   paciente?: Pick<IPaciente, 'id' | 'nomePaciente'> | null;
 }

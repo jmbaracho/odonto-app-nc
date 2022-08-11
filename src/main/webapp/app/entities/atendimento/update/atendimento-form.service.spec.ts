@@ -21,7 +21,7 @@ describe('Atendimento Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             dataAtendimento: expect.any(Object),
-            procedimento: expect.any(Object),
+            procedimentos: expect.any(Object),
             dentista: expect.any(Object),
             paciente: expect.any(Object),
           })
@@ -35,7 +35,7 @@ describe('Atendimento Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             dataAtendimento: expect.any(Object),
-            procedimento: expect.any(Object),
+            procedimentos: expect.any(Object),
             dentista: expect.any(Object),
             paciente: expect.any(Object),
           })

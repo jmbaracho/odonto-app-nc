@@ -39,20 +39,27 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_procedimento">Procedimento</label>
+          <label for="field_procedimentos">Procedimento</label>
           <select
             class="form-control"
-            id="field_procedimento"
+            id="field_procedimentos"
             data-cy="procedimento"
-            name="procedimento"
-            formControlName="procedimento"
+            multiple
+            name="procedimentos"
+            formControlName="procedimentos"
             [compareWith]="compareProcedimento"
           >
-            <option [ngValue]="null"></option>
             <option [ngValue]="procedimentoOption" *ngFor="let procedimentoOption of procedimentosSharedCollection">
               {{ procedimentoOption.descricao }}
             </option>
           </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['procedimentos'])!.invalid && (editForm.get(['procedimentos'])!.dirty || editForm.get(['procedimentos'])!.touched)
+          "
+        >
+          <small class="form-text text-danger" *ngIf="editForm.get(['procedimentos'])?.errors?.required"> This field is required. </small>
         </div>
 
         <div class="row mb-3">
