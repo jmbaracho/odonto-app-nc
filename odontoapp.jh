@@ -41,8 +41,10 @@ relationship OneToMany {
   	Paciente to Atendimento{paciente(nomePaciente)}
 }
 
-relationship ManyToOne {
-	Atendimento{procedimento(descricao)} to Procedimento
+relationship ManyToMany {
+	Atendimento{procedimento(descricao) required} 
+    to 
+    Procedimento{atendimento required}
 }
 
 paginate Dentista, Paciente, Procedimento with pagination
