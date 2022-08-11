@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Atendimento.
+    -->
+    <changeSet id="20220811003642-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="procedimento_id"
+                                 baseTableName="atendimento"
+                                 constraintName="fk_atendimento__procedimento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="procedimento"/>
+
+        <addForeignKeyConstraint baseColumnNames="dentista_id"
+                                 baseTableName="atendimento"
+                                 constraintName="fk_atendimento__dentista_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dentista"/>
+
+        <addForeignKeyConstraint baseColumnNames="paciente_id"
+                                 baseTableName="atendimento"
+                                 constraintName="fk_atendimento__paciente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="paciente"/>
+    </changeSet>
+</databaseChangeLog>

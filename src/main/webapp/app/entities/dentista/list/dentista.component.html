@@ -1,0 +1,118 @@
+<div>
+  <h2 id="page-heading" data-cy="DentistaHeading">
+    <span>Dentistas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-dentista"
+        [routerLink]="['/dentista/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Dentista </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="dentistas?.length === 0">
+    <span>No Dentistas found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="dentistas && dentistas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nomeDentista"><span>Nome Dentista</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="cpf"><span>Cpf</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="cro"><span>Cro</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dataNascimento"><span>Data Nascimento</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="logradouro"><span>Logradouro</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="numero"><span>Numero</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="bairro"><span>Bairro</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="cidade"><span>Cidade</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="uf"><span>Uf</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="complemento"><span>Complemento</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="email"><span>Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telefone"><span>Telefone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dentista of dentistas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/dentista', dentista.id, 'view']">{{ dentista.id }}</a>
+          </td>
+          <td>{{ dentista.nomeDentista }}</td>
+          <td>{{ dentista.cpf }}</td>
+          <td>{{ dentista.cro }}</td>
+          <td>{{ dentista.dataNascimento | formatMediumDate }}</td>
+          <td>{{ dentista.logradouro }}</td>
+          <td>{{ dentista.numero }}</td>
+          <td>{{ dentista.bairro }}</td>
+          <td>{{ dentista.cidade }}</td>
+          <td>{{ dentista.uf }}</td>
+          <td>{{ dentista.complemento }}</td>
+          <td>{{ dentista.email }}</td>
+          <td>{{ dentista.telefone }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/dentista', dentista.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/dentista', dentista.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(dentista)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="dentistas && dentistas.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

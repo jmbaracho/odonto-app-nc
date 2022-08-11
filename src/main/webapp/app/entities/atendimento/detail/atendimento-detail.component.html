@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="atendimento">
+      <h2 data-cy="atendimentoDetailsHeading"><span>Atendimento</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ atendimento.id }}</span>
+        </dd>
+        <dt><span>Data Atendimento</span></dt>
+        <dd>
+          <span>{{ atendimento.dataAtendimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Procedimento</span></dt>
+        <dd>
+          <div *ngIf="atendimento.procedimento">
+            <a [routerLink]="['/procedimento', atendimento.procedimento.id, 'view']">{{ atendimento.procedimento?.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span>Dentista</span></dt>
+        <dd>
+          <div *ngIf="atendimento.dentista">
+            <a [routerLink]="['/dentista', atendimento.dentista.id, 'view']">{{ atendimento.dentista?.nomeDentista }}</a>
+          </div>
+        </dd>
+        <dt><span>Paciente</span></dt>
+        <dd>
+          <div *ngIf="atendimento.paciente">
+            <a [routerLink]="['/paciente', atendimento.paciente.id, 'view']">{{ atendimento.paciente?.nomePaciente }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/atendimento', atendimento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

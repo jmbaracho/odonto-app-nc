@@ -48,6 +48,12 @@ public class CacheConfiguration {
             createCache(cm, br.com.jmb.odontoappnc.domain.User.class.getName());
             createCache(cm, br.com.jmb.odontoappnc.domain.Authority.class.getName());
             createCache(cm, br.com.jmb.odontoappnc.domain.User.class.getName() + ".authorities");
+            createCache(cm, br.com.jmb.odontoappnc.domain.Dentista.class.getName());
+            createCache(cm, br.com.jmb.odontoappnc.domain.Dentista.class.getName() + ".atendimentos");
+            createCache(cm, br.com.jmb.odontoappnc.domain.Paciente.class.getName());
+            createCache(cm, br.com.jmb.odontoappnc.domain.Paciente.class.getName() + ".atendimentos");
+            createCache(cm, br.com.jmb.odontoappnc.domain.Procedimento.class.getName());
+            createCache(cm, br.com.jmb.odontoappnc.domain.Atendimento.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

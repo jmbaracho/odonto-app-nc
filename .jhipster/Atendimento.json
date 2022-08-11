@@ -1,0 +1,42 @@
+{
+  "applications": "*",
+  "changelogDate": "20220811003642",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "atendimento",
+  "fields": [
+    {
+      "fieldName": "dataAtendimento",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Atendimento",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "procedimento",
+      "relationshipName": "procedimento",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nomeDentista",
+      "otherEntityName": "dentista",
+      "otherEntityRelationshipName": "atendimento",
+      "relationshipName": "dentista",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nomePaciente",
+      "otherEntityName": "paciente",
+      "otherEntityRelationshipName": "atendimento",
+      "relationshipName": "paciente",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
